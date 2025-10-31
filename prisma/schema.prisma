@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Sticker {
+  id               String   @id @default(cuid())
+  title            String
+  description      String?
+  file_url         String
+  file_type        String   // 'image' or 'gif'
+  thumbnail_url    String?
+  tags             String[] // Array of tags
+  telegram_pack_url String?
+  discord_pack_url  String?
+  uploader_wallet  String
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  @@index([uploader_wallet])
+  @@index([created_at])
+}
+
