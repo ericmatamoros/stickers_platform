@@ -20,7 +20,8 @@ export function StickerCard({ sticker }: StickerCardProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopyLink = async () => {
-    await navigator.clipboard.writeText(sticker.file_url);
+    const pageUrl = `${window.location.origin}/sticker/${sticker.id}`;
+    await navigator.clipboard.writeText(pageUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };

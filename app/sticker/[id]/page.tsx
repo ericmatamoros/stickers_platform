@@ -47,7 +47,8 @@ export default function StickerDetailPage() {
 
   const handleCopyLink = async () => {
     if (sticker) {
-      await navigator.clipboard.writeText(sticker.file_url);
+      const pageUrl = `${window.location.origin}/sticker/${sticker.id}`;
+      await navigator.clipboard.writeText(pageUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
