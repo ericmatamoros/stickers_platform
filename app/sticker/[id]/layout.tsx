@@ -27,21 +27,28 @@ export async function generateMetadata({
         title: sticker.title,
         description: sticker.description || 'View and download this sticker',
         url: pageUrl,
+        siteName: 'MyStickers',
         images: [
           {
             url: sticker.file_url,
-            width: 800,
-            height: 800,
+            width: 1200,
+            height: 1200,
             alt: sticker.title,
+            type: sticker.file_type === 'gif' ? 'image/gif' : 'image/png',
           },
         ],
         type: 'website',
+        locale: 'en_US',
       },
       twitter: {
         card: 'summary_large_image',
         title: sticker.title,
         description: sticker.description || 'View and download this sticker',
         images: [sticker.file_url],
+        creator: '@MyStickers',
+      },
+      other: {
+        'og:image:secure_url': sticker.file_url,
       },
     };
   } catch (error) {
