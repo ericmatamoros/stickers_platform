@@ -27,6 +27,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchStickers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, selectedTags]);
 
   const fetchStickers = async () => {

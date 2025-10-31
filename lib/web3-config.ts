@@ -11,6 +11,5 @@ export const config = getDefaultConfig({
   chains: [base],
   transports: { [base.id]: http() },
   ssr: true,
-  walletConnectProjectId: projectId,
 });
 
