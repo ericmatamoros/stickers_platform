@@ -97,10 +97,9 @@ export function StickerCard({ sticker }: StickerCardProps) {
           {/* Copy Button */}
           <button
             onClick={handleCopyLink}
-            className="flex-1 rounded-[6px] text-[16px] font-semibold leading-[19px] transition-all duration-200 hover:border-opacity-50"
+            className="flex-1 rounded-[6px] text-[16px] font-semibold leading-[19px] transition-all duration-200 hover:border-opacity-50 flex items-center justify-center"
             style={{
               height: '32px',
-              padding: '10px 13px',
               backgroundColor: '#141414',
               border: copied ? '1px solid #FF8000' : '1px solid rgba(147, 147, 147, 0.35)',
               color: copied ? '#FFFFFF' : 'rgba(147, 147, 147, 0.35)',
@@ -113,10 +112,9 @@ export function StickerCard({ sticker }: StickerCardProps) {
           {/* Download Button */}
           <button
             onClick={handleDownload}
-            className="flex-1 rounded-[6px] text-[16px] font-semibold leading-[19px] transition-all duration-200 hover:border-opacity-80"
+            className="flex-1 rounded-[6px] text-[16px] font-semibold leading-[19px] transition-all duration-200 hover:border-opacity-80 flex items-center justify-center"
             style={{
               height: '32px',
-              padding: '10px 13px',
               backgroundColor: '#141414',
               border: '1px solid #FF8000',
               color: '#FFFFFF',

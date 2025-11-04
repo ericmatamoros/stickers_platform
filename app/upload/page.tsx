@@ -26,15 +26,22 @@ export default function UploadPage() {
   if (!isAdmin) {
     return (
       <NFTGate>
-        <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
+        <div className="min-h-screen" style={{ backgroundColor: '#0D0D0D' }}>
           <Navbar />
-          <div className="flex items-center justify-center min-h-[calc(100vh-64px)]">
-            <div className="text-center p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md">
+          <div className="flex items-center justify-center min-h-[calc(100vh-64px)] p-4">
+            <div 
+              className="text-center rounded-2xl max-w-md"
+              style={{
+                padding: '48px 32px',
+                backgroundColor: '#141414',
+                border: '1px solid rgba(147, 147, 147, 0.15)',
+              }}
+            >
               <div className="text-6xl mb-4">🚫</div>
-              <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+              <h2 className="text-3xl font-bold mb-4" style={{ color: '#FFFFFF' }}>
                 Admin Access Required
               </h2>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p style={{ color: '#939393' }}>
                 You need to be an admin to upload stickers.
               </p>
             </div>
@@ -119,119 +126,169 @@ export default function UploadPage() {
 
   return (
     <NFTGate>
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
+      <div className="min-h-screen" style={{ backgroundColor: '#0D0D0D' }}>
         <Navbar />
         
-        <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-              📤 Upload Sticker
-            </h1>
+        <main className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto py-8">
+            <div 
+              className="rounded-2xl p-8"
+              style={{
+                backgroundColor: '#141414',
+                border: '1px solid rgba(147, 147, 147, 0.15)',
+              }}
+            >
+              <h1 className="text-3xl font-bold mb-6" style={{ color: '#FFFFFF' }}>
+                📤 Upload Sticker
+              </h1>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  File *
-                </label>
-                <input
-                  type="file"
-                  accept="image/*,.gif"
-                  onChange={(e) => setFile(e.target.files?.[0] || null)}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                />
-              </div>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#939393' }}>
+                    File *
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*,.gif"
+                    onChange={(e) => setFile(e.target.files?.[0] || null)}
+                    required
+                    className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                    style={{
+                      backgroundColor: '#1B1B1B',
+                      border: '1px solid rgba(147, 147, 147, 0.35)',
+                      color: '#FFFFFF',
+                    }}
+                  />
+                </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Title *
-                </label>
-                <input
-                  type="text"
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                />
-              </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#939393' }}>
+                    Title *
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.title}
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    required
+                    className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                    style={{
+                      backgroundColor: '#1B1B1B',
+                      border: '1px solid rgba(147, 147, 147, 0.35)',
+                      color: '#FFFFFF',
+                    }}
+                  />
+                </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Description
-                </label>
-                <textarea
-                  value={formData.description}
-                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  rows={3}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                />
-              </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#939393' }}>
+                    Description
+                  </label>
+                  <textarea
+                    value={formData.description}
+                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    rows={3}
+                    className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                    style={{
+                      backgroundColor: '#1B1B1B',
+                      border: '1px solid rgba(147, 147, 147, 0.35)',
+                      color: '#FFFFFF',
+                    }}
+                  />
+                </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  File Type *
-                </label>
-                <select
-                  value={formData.file_type}
-                  onChange={(e) => setFormData({ ...formData, file_type: e.target.value })}
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                <div>
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#939393' }}>
+                    File Type *
+                  </label>
+                  <select
+                    value={formData.file_type}
+                    onChange={(e) => setFormData({ ...formData, file_type: e.target.value })}
+                    className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                    style={{
+                      backgroundColor: '#1B1B1B',
+                      border: '1px solid rgba(147, 147, 147, 0.35)',
+                      color: '#FFFFFF',
+                    }}
+                  >
+                    <option value="image">Image</option>
+                    <option value="gif">GIF</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#939393' }}>
+                    Tags (comma separated)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.tags}
+                    onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                    placeholder="funny, cute, reaction"
+                    className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                    style={{
+                      backgroundColor: '#1B1B1B',
+                      border: '1px solid rgba(147, 147, 147, 0.35)',
+                      color: '#FFFFFF',
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#939393' }}>
+                    Telegram Pack URL
+                  </label>
+                  <input
+                    type="url"
+                    value={formData.telegram_pack_url}
+                    onChange={(e) =>
+                      setFormData({ ...formData, telegram_pack_url: e.target.value })
+                    }
+                    placeholder="https://t.me/addstickers/..."
+                    className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                    style={{
+                      backgroundColor: '#1B1B1B',
+                      border: '1px solid rgba(147, 147, 147, 0.35)',
+                      color: '#FFFFFF',
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2" style={{ color: '#939393' }}>
+                    Discord Pack URL
+                  </label>
+                  <input
+                    type="url"
+                    value={formData.discord_pack_url}
+                    onChange={(e) =>
+                      setFormData({ ...formData, discord_pack_url: e.target.value })
+                    }
+                    placeholder="https://discord.com/..."
+                    className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                    style={{
+                      backgroundColor: '#1B1B1B',
+                      border: '1px solid rgba(147, 147, 147, 0.35)',
+                      color: '#FFFFFF',
+                    }}
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={uploading || !file}
+                  className="w-full py-3 px-6 font-semibold rounded-lg transition-all"
+                  style={{
+                    background: uploading || !file ? 'rgba(147, 147, 147, 0.35)' : 'radial-gradient(88.54% 235.56% at 50.22% 50.31%, rgba(247, 153, 40, 0.021) 0%, rgba(247, 153, 40, 0.084) 100%)',
+                    border: uploading || !file ? '1px solid rgba(147, 147, 147, 0.35)' : '1px solid #FF8000',
+                    color: uploading || !file ? '#939393' : '#E8E8E8',
+                    cursor: uploading || !file ? 'not-allowed' : 'pointer',
+                    boxShadow: uploading || !file ? 'none' : 'inset 3px 3px 4px rgba(247, 153, 40, 0.17)',
+                  }}
                 >
-                  <option value="image">Image</option>
-                  <option value="gif">GIF</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Tags (comma separated)
-                </label>
-                <input
-                  type="text"
-                  value={formData.tags}
-                  onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-                  placeholder="funny, cute, reaction"
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Telegram Pack URL
-                </label>
-                <input
-                  type="url"
-                  value={formData.telegram_pack_url}
-                  onChange={(e) =>
-                    setFormData({ ...formData, telegram_pack_url: e.target.value })
-                  }
-                  placeholder="https://t.me/addstickers/..."
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Discord Pack URL
-                </label>
-                <input
-                  type="url"
-                  value={formData.discord_pack_url}
-                  onChange={(e) =>
-                    setFormData({ ...formData, discord_pack_url: e.target.value })
-                  }
-                  placeholder="https://discord.com/..."
-                  className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={uploading || !file}
-                className="w-full py-3 px-6 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white font-semibold rounded-lg transition-colors"
-              >
-                {uploading ? 'Uploading...' : 'Upload Sticker'}
-              </button>
-            </form>
+                  {uploading ? 'Uploading...' : 'Upload Sticker'}
+                </button>
+              </form>
+            </div>
           </div>
         </main>
       </div>

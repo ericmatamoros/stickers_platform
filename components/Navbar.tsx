@@ -12,9 +12,9 @@ export function Navbar() {
   return (
     <nav className="sticky top-0 z-50" style={{ backgroundColor: '#0D0D0D' }}>
       <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 relative">
+        <div className="flex justify-between items-center h-16 relative max-w-[1230px] mx-auto w-full">
           {/* Logo and Navigation */}
-          <div className="flex items-center gap-4 md:gap-8 lg:ml-[341px]">
+          <div className="flex items-center gap-4 md:gap-8">
             <Link href="/" className="flex items-center gap-2 md:gap-3">
               {/* Orange Square Icon */}
               <div className="w-7 h-7 flex items-center justify-center" style={{ transform: 'rotate(-90deg)' }}>
@@ -50,7 +50,7 @@ export function Navbar() {
           </div>
 
           {/* Wallet Connect Button */}
-          <div className="flex items-center lg:mr-[345px]">
+          <div className="flex items-center">
             <ConnectButton.Custom>
               {({ openConnectModal, mounted, account, openAccountModal, chain }) => {
                 if (!mounted) {

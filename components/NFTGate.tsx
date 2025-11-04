@@ -15,10 +15,10 @@ export function NFTGate({ children }: { children: React.ReactNode }) {
   // Show loading state while checking wallet connection
   if (!mounted) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#0D0D0D' }}>
         <div className="text-center">
           <div className="animate-spin text-6xl mb-4">⏳</div>
-          <p className="text-xl text-gray-700 dark:text-gray-300">Loading...</p>
+          <p className="text-xl" style={{ color: '#939393' }}>Loading...</p>
         </div>
       </div>
     );
@@ -27,21 +27,58 @@ export function NFTGate({ children }: { children: React.ReactNode }) {
   // NFT check temporarily disabled for testing
   if (!isConnected) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-4">
-        <div className="text-center p-8 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl max-w-md w-full">
-          <div className="text-6xl mb-6 animate-bounce">🔒</div>
-          <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-white">
-            Welcome to MyStickers!
+      <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#0D0D0D' }}>
+        <div 
+          className="text-center rounded-2xl max-w-md w-full"
+          style={{
+            padding: '48px 32px',
+            backgroundColor: '#141414',
+            border: '1px solid rgba(147, 147, 147, 0.15)',
+          }}
+        >
+          <div className="text-6xl mb-6">🔒</div>
+          <h2 
+            className="text-3xl font-bold mb-4" 
+            style={{ color: '#FFFFFF' }}
+          >
+            Welcome to Jira Stickers!
           </h2>
-          <p className="text-gray-600 dark:text-gray-300 mb-8">
+          <p 
+            className="mb-8 text-base"
+            style={{ color: '#939393' }}
+          >
             Connect your wallet to access the sticker gallery and discover amazing content
           </p>
-          <div className="flex justify-center">
-            <ConnectButton />
+          <div className="flex justify-center mb-6">
+            <ConnectButton.Custom>
+              {({ openConnectModal }) => (
+                <button
+                  onClick={openConnectModal}
+                  className="rounded-[10px] transition-all text-[16px] font-semibold"
+                  style={{
+                    width: '200px',
+                    height: '48px',
+                    background: 'radial-gradient(88.54% 235.56% at 50.22% 50.31%, rgba(247, 153, 40, 0.021) 0%, rgba(247, 153, 40, 0.084) 100%)',
+                    border: '1px solid #FF8000',
+                    boxShadow: 'inset 3px 3px 4px rgba(247, 153, 40, 0.17)',
+                    backdropFilter: 'blur(10px)',
+                    color: '#E8E8E8',
+                  }}
+                >
+                  Connect Wallet
+                </button>
+              )}
+            </ConnectButton.Custom>
           </div>
-          <div className="mt-6 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              💡 <strong>Tip:</strong> Your wallet connection persists across sessions
+          <div 
+            className="p-4 rounded-lg"
+            style={{
+              backgroundColor: 'rgba(255, 128, 0, 0.05)',
+              border: '1px solid rgba(255, 128, 0, 0.15)',
+            }}
+          >
+            <p className="text-sm" style={{ color: '#939393' }}>
+              💡 <strong style={{ color: '#FFFFFF' }}>Tip:</strong> Your wallet connection persists across sessions
             </p>
           </div>
         </div>
