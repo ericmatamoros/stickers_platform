@@ -62,34 +62,52 @@ export default function Home() {
 
   return (
     <NFTGate>
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
+      <div className="min-h-screen" style={{ backgroundColor: '#0D0D0D' }}>
         <Navbar />
         
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="mb-8">
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              🎨 Sticker Gallery
+        <main className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header Section */}
+          <div className="flex flex-col gap-4 mb-8 lg:ml-[341px] mt-[84px] lg:max-w-[1230px]">
+            {/* Title */}
+            <h1 
+              className="text-[36px] font-semibold leading-[44px]" 
+              style={{ color: '#FFFFFF' }}
+            >
+              Sticker Gallery
             </h1>
-            <p className="text-gray-600 dark:text-gray-300">
+            
+            {/* Subtitle */}
+            <p 
+              className="text-[16px] font-normal leading-[19px]" 
+              style={{ color: '#939393' }}
+            >
               Browse, download, and share amazing stickers and GIFs
             </p>
-          </div>
 
-          {/* Search Bar */}
-          <div className="mb-6">
-            <input
-              type="text"
-              placeholder="Search stickers..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-            />
+            {/* Search Bar */}
+            <div className="w-full">
+              <input
+                type="text"
+                placeholder="Search stickers"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full rounded-[10px] text-[16px] font-medium leading-[19px] focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                style={{
+                  height: '45px',
+                  padding: '10px 13px',
+                  backgroundColor: '#141414',
+                  border: '2px solid rgba(147, 147, 147, 0.35)',
+                  color: '#FFFFFF',
+                  backdropFilter: 'blur(10px)',
+                }}
+              />
+            </div>
           </div>
 
           {/* Tag Filter */}
           {allTags.length > 0 && (
-            <div className="mb-6">
-              <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+            <div className="mb-6 lg:ml-[341px] lg:max-w-[1230px]">
+              <h3 className="text-sm font-semibold mb-2" style={{ color: '#939393' }}>
                 Filter by tags:
               </h3>
               <div className="flex flex-wrap gap-2">
@@ -97,11 +115,12 @@ export default function Home() {
                   <button
                     key={tag}
                     onClick={() => toggleTag(tag)}
-                    className={`px-3 py-1 rounded-full text-sm font-medium transition-colors ${
-                      selectedTags.includes(tag)
-                        ? 'bg-purple-600 text-white'
-                        : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-purple-100 dark:hover:bg-gray-600'
-                    }`}
+                    className="px-3 py-1 rounded-full text-sm font-medium transition-colors"
+                    style={{
+                      backgroundColor: selectedTags.includes(tag) ? '#FF8000' : '#141414',
+                      color: selectedTags.includes(tag) ? '#FFFFFF' : '#939393',
+                      border: selectedTags.includes(tag) ? '1px solid #FF8000' : '1px solid rgba(147, 147, 147, 0.35)',
+                    }}
                   >
                     {tag}
                   </button>
@@ -111,23 +130,25 @@ export default function Home() {
           )}
 
           {/* Stickers Grid */}
-          {loading ? (
-            <div className="text-center py-12">
-              <div className="animate-spin text-6xl mb-4">⏳</div>
-              <p className="text-xl text-gray-700 dark:text-gray-300">Loading stickers...</p>
-            </div>
-          ) : stickers.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🔍</div>
-              <p className="text-xl text-gray-700 dark:text-gray-300">No stickers found</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {stickers.map((sticker) => (
-                <StickerCard key={sticker.id} sticker={sticker} />
-              ))}
-            </div>
-          )}
+          <div className="lg:ml-[341px] lg:max-w-[1230px] pb-[60px]">
+            {loading ? (
+              <div className="text-center py-12">
+                <div className="animate-spin text-6xl mb-4">⏳</div>
+                <p className="text-xl" style={{ color: '#939393' }}>Loading stickers...</p>
+              </div>
+            ) : stickers.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">🔍</div>
+                <p className="text-xl" style={{ color: '#939393' }}>No stickers found</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
+                {stickers.map((sticker) => (
+                  <StickerCard key={sticker.id} sticker={sticker} />
+                ))}
+              </div>
+            )}
+          </div>
         </main>
       </div>
     </NFTGate>

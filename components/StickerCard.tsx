@@ -46,71 +46,85 @@ export function StickerCard({ sticker }: StickerCardProps) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+    <div 
+      className="w-full rounded-[10px] overflow-hidden transition-all duration-300 hover:transform hover:scale-105"
+      style={{
+        maxWidth: '290px',
+        height: '383px',
+        backgroundColor: '#141414',
+        position: 'relative',
+      }}
+    >
+      {/* Sticker Image */}
       <Link href={`/sticker/${sticker.id}`}>
-        <div className="relative aspect-square bg-gray-100 dark:bg-gray-700 cursor-pointer hover:opacity-90 transition-opacity">
+        <div 
+          className="w-full cursor-pointer hover:opacity-90 transition-opacity flex items-center justify-center"
+          style={{
+            height: '283px',
+            padding: '39px 32px 0px 32px',
+          }}
+        >
           <Image
             src={sticker.file_url}
             alt={sticker.title}
-            fill
-            className="object-contain p-4"
+            width={226}
+            height={226}
+            className="object-contain max-w-full max-h-[226px]"
             unoptimized={sticker.file_type === 'gif'}
           />
         </div>
       </Link>
       
-      <div className="p-4">
-        <h3 className="font-semibold text-lg mb-2 text-gray-900 dark:text-white truncate">
+      {/* Bottom Section */}
+      <div 
+        className="absolute bottom-0 left-0 right-0 rounded-b-[10px]"
+        style={{
+          height: '100px',
+          backgroundColor: '#1B1B1B',
+          padding: '9px',
+        }}
+      >
+        {/* Title */}
+        <h3 
+          className="font-semibold text-[18px] leading-[22px] truncate mb-2"
+          style={{ color: '#FFFFFF' }}
+        >
           {sticker.title}
         </h3>
         
-        <div className="flex flex-wrap gap-1 mb-3">
-          {sticker.tags.slice(0, 3).map((tag, idx) => (
-            <span
-              key={idx}
-              className="text-xs bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded-full"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-2 gap-2">
+        {/* Buttons */}
+        <div className="flex gap-2">
+          {/* Copy Button */}
           <button
             onClick={handleCopyLink}
-            className="flex items-center justify-center gap-1 px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded-lg transition-colors"
+            className="flex-1 rounded-[6px] text-[16px] font-semibold leading-[19px] transition-all duration-200 hover:border-opacity-50"
+            style={{
+              height: '32px',
+              padding: '10px 13px',
+              backgroundColor: '#141414',
+              border: copied ? '1px solid #FF8000' : '1px solid rgba(147, 147, 147, 0.35)',
+              color: copied ? '#FFFFFF' : 'rgba(147, 147, 147, 0.35)',
+              backdropFilter: 'blur(10px)',
+            }}
           >
-            {copied ? '✓' : '📋'} {copied ? 'Copied!' : 'Copy'}
+            {copied ? 'copied!' : 'copy'}
           </button>
           
+          {/* Download Button */}
           <button
             onClick={handleDownload}
-            className="flex items-center justify-center gap-1 px-3 py-2 bg-purple-500 hover:bg-purple-600 text-white text-sm rounded-lg transition-colors"
+            className="flex-1 rounded-[6px] text-[16px] font-semibold leading-[19px] transition-all duration-200 hover:border-opacity-80"
+            style={{
+              height: '32px',
+              padding: '10px 13px',
+              backgroundColor: '#141414',
+              border: '1px solid #FF8000',
+              color: '#FFFFFF',
+              backdropFilter: 'blur(10px)',
+            }}
           >
-            ⬇️ Download
+            download
           </button>
-          
-          {sticker.telegram_pack_url && (
-            <a
-              href={sticker.telegram_pack_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1 px-3 py-2 bg-cyan-500 hover:bg-cyan-600 text-white text-sm rounded-lg transition-colors"
-            >
-              📱 Telegram
-            </a>
-          )}
-          
-          {sticker.discord_pack_url && (
-            <a
-              href={sticker.discord_pack_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1 px-3 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm rounded-lg transition-colors"
-            >
-              💬 Discord
-            </a>
-          )}
         </div>
       </div>
     </div>

@@ -10,37 +10,52 @@ export function Navbar() {
   const isAdmin = address && ADMIN_WALLETS.includes(address.toLowerCase());
 
   return (
-    <nav className="bg-white dark:bg-gray-900 shadow-lg sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center space-x-8">
-            <Link href="/" className="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-2">
-              🎨 MyStickers
+    <nav className="sticky top-0 z-50" style={{ backgroundColor: '#0D0D0D' }}>
+      <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16 relative">
+          {/* Logo and Navigation */}
+          <div className="flex items-center gap-4 md:gap-8 lg:ml-[341px]">
+            <Link href="/" className="flex items-center gap-2 md:gap-3">
+              {/* Orange Square Icon */}
+              <div className="w-7 h-7 flex items-center justify-center" style={{ transform: 'rotate(-90deg)' }}>
+                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2.33" y="2.33" width="23.34" height="23.34" rx="4" stroke="#FF8000" strokeWidth="2.33" fill="none"/>
+                </svg>
+              </div>
+              {/* Brand Text */}
+              <span className="text-lg md:text-[22px] font-semibold leading-[27px]" style={{ color: '#FFFFFF' }}>
+                Jira Stickers
+              </span>
             </Link>
-            <div className="hidden md:flex space-x-4">
+            
+            {/* Gallery Link */}
+            <Link
+              href="/"
+              className="hidden md:block text-[22px] font-normal leading-[27px]"
+              style={{ color: '#777777' }}
+            >
+              Gallery
+            </Link>
+            
+            {/* Upload Link (Admin Only) */}
+            {isAdmin && (
               <Link
-                href="/"
-                className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                href="/upload"
+                className="hidden md:block text-[22px] font-normal leading-[27px]"
+                style={{ color: '#777777' }}
               >
-                Gallery
+                Upload
               </Link>
-              {isAdmin && (
-                <Link
-                  href="/upload"
-                  className="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                >
-                  Upload
-                </Link>
-              )}
-            </div>
+            )}
           </div>
-          <div className="flex items-center">
+
+          {/* Wallet Connect Button */}
+          <div className="flex items-center lg:mr-[345px]">
             <ConnectButton.Custom>
               {({ openConnectModal, mounted, account, openAccountModal, chain }) => {
-                // Show skeleton while mounting to prevent layout shift
                 if (!mounted) {
                   return (
-                    <div className="bg-gray-200 dark:bg-gray-700 animate-pulse px-4 py-2 rounded-lg h-10 w-36" />
+                    <div className="animate-pulse rounded-[10px] h-10 w-[120px] md:w-[150px]" style={{ background: 'rgba(247, 153, 40, 0.084)' }} />
                   );
                 }
 
@@ -48,22 +63,19 @@ export function Navbar() {
                   return (
                     <button
                       onClick={openConnectModal}
-                      className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl flex items-center gap-2"
+                      className="relative rounded-[10px] transition-all"
+                      style={{
+                        width: '120px',
+                        height: '40px',
+                        background: 'radial-gradient(88.54% 235.56% at 50.22% 50.31%, rgba(247, 153, 40, 0.021) 0%, rgba(247, 153, 40, 0.084) 100%)',
+                        border: '1px solid #FF8000',
+                        boxShadow: 'inset 3px 3px 4px rgba(247, 153, 40, 0.17)',
+                        backdropFilter: 'blur(10px)',
+                      }}
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M13 7H7v6h6V7z" />
-                        <path
-                          fillRule="evenodd"
-                          d="M7 2a1 1 0 012 0v1h2V2a1 1 0 112 0v1h2a2 2 0 012 2v2h1a1 1 0 110 2h-1v2h1a1 1 0 110 2h-1v2a2 2 0 01-2 2h-2v1a1 1 0 11-2 0v-1H9v1a1 1 0 11-2 0v-1H5a2 2 0 01-2-2v-2H2a1 1 0 110-2h1V9H2a1 1 0 010-2h1V5a2 2 0 012-2h2V2zM5 5h10v10H5V5z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <span>Connect Wallet</span>
+                      <span className="text-[14px] md:text-[16px] font-semibold leading-[16px] text-center" style={{ color: '#E8E8E8' }}>
+                        Connect
+                      </span>
                     </button>
                   );
                 }
@@ -71,13 +83,30 @@ export function Navbar() {
                 return (
                   <button
                     onClick={openAccountModal}
-                    className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-all shadow-lg hover:shadow-xl flex items-center gap-2"
+                    className="relative rounded-[10px] transition-all"
+                    style={{
+                      width: '150px',
+                      height: '40px',
+                      background: 'radial-gradient(88.54% 235.56% at 50.22% 50.31%, rgba(247, 153, 40, 0.021) 0%, rgba(247, 153, 40, 0.084) 100%)',
+                      border: '1px solid #FF8000',
+                      boxShadow: 'inset 3px 3px 4px rgba(247, 153, 40, 0.17)',
+                      backdropFilter: 'blur(10px)',
+                    }}
                   >
-                    <div className="w-2 h-2 bg-green-300 rounded-full animate-pulse" style={{boxShadow:'0 0 8px #00FF00'}} />
-                    <span>{account.displayName}</span>
-                    {chain?.unsupported && (
-                      <span className="text-red-300 text-xs">⚠️</span>
-                    )}
+                    <div className="flex items-center justify-center gap-2 md:gap-3 px-3 md:px-5">
+                      {/* Green Dot Indicator */}
+                      <div 
+                        className="w-[7px] h-[7px] rounded-full flex-shrink-0" 
+                        style={{ 
+                          background: '#00EE17',
+                          boxShadow: '0px 0px 4px rgba(0, 238, 24, 0.5)'
+                        }} 
+                      />
+                      {/* Wallet Address */}
+                      <span className="text-[14px] md:text-[16px] font-semibold leading-[16px] text-center truncate" style={{ color: '#E8E8E8' }}>
+                        {account.displayName}
+                      </span>
+                    </div>
                   </button>
                 );
               }}
