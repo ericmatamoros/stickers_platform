@@ -49,7 +49,7 @@ export function NFTGate({ children }: { children: React.ReactNode }) {
           >
             Connect your wallet to access the sticker gallery and discover amazing content
           </p>
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center">
             <ConnectButton.Custom>
               {({ openConnectModal }) => (
                 <button
@@ -69,17 +69,6 @@ export function NFTGate({ children }: { children: React.ReactNode }) {
                 </button>
               )}
             </ConnectButton.Custom>
-          </div>
-          <div 
-            className="p-4 rounded-lg"
-            style={{
-              backgroundColor: 'rgba(255, 128, 0, 0.05)',
-              border: '1px solid rgba(255, 128, 0, 0.15)',
-            }}
-          >
-            <p className="text-sm" style={{ color: '#939393' }}>
-              💡 <strong style={{ color: '#FFFFFF' }}>Tip:</strong> Your wallet connection persists across sessions
-            </p>
           </div>
         </div>
       </div>

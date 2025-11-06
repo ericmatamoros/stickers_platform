@@ -15,9 +15,6 @@ export default function UploadPage() {
     title: '',
     description: '',
     file_type: 'image',
-    tags: '',
-    telegram_pack_url: '',
-    discord_pack_url: '',
   });
   const [file, setFile] = useState<File | null>(null);
 
@@ -89,11 +86,6 @@ export default function UploadPage() {
       }
 
       // Step 3: Save metadata to database
-      const tags = formData.tags
-        .split(',')
-        .map((tag) => tag.trim())
-        .filter(Boolean);
-
       const stickerResponse = await fetch('/api/stickers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -102,9 +94,9 @@ export default function UploadPage() {
           description: formData.description,
           file_url: fileUrl,
           file_type: formData.file_type,
-          tags,
-          telegram_pack_url: formData.telegram_pack_url || null,
-          discord_pack_url: formData.discord_pack_url || null,
+          tags: [],
+          telegram_pack_url: null,
+          discord_pack_url: null,
           uploader_wallet: address,
         }),
       });
@@ -213,64 +205,6 @@ export default function UploadPage() {
                     <option value="image">Image</option>
                     <option value="gif">GIF</option>
                   </select>
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2" style={{ color: '#939393' }}>
-                    Tags (comma separated)
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.tags}
-                    onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-                    placeholder="funny, cute, reaction"
-                    className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50"
-                    style={{
-                      backgroundColor: '#1B1B1B',
-                      border: '1px solid rgba(147, 147, 147, 0.35)',
-                      color: '#FFFFFF',
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2" style={{ color: '#939393' }}>
-                    Telegram Pack URL
-                  </label>
-                  <input
-                    type="url"
-                    value={formData.telegram_pack_url}
-                    onChange={(e) =>
-                      setFormData({ ...formData, telegram_pack_url: e.target.value })
-                    }
-                    placeholder="https://t.me/addstickers/..."
-                    className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50"
-                    style={{
-                      backgroundColor: '#1B1B1B',
-                      border: '1px solid rgba(147, 147, 147, 0.35)',
-                      color: '#FFFFFF',
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2" style={{ color: '#939393' }}>
-                    Discord Pack URL
-                  </label>
-                  <input
-                    type="url"
-                    value={formData.discord_pack_url}
-                    onChange={(e) =>
-                      setFormData({ ...formData, discord_pack_url: e.target.value })
-                    }
-                    placeholder="https://discord.com/..."
-                    className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50"
-                    style={{
-                      backgroundColor: '#1B1B1B',
-                      border: '1px solid rgba(147, 147, 147, 0.35)',
-                      color: '#FFFFFF',
-                    }}
-                  />
                 </div>
 
                 <button
