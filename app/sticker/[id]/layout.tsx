@@ -13,7 +13,7 @@ export async function generateMetadata({
 
     if (!sticker) {
       return {
-        title: 'Sticker Not Found | MyStickers',
+        title: 'Sticker Not Found | JiraStickers',
       };
     }
 
@@ -21,13 +21,13 @@ export async function generateMetadata({
     const pageUrl = `${baseUrl}/sticker/${params.id}`;
 
     return {
-      title: `${sticker.title} | MyStickers`,
+      title: `${sticker.title} | JiraStickers`,
       description: sticker.description || 'View and download this sticker',
       openGraph: {
         title: sticker.title,
         description: sticker.description || 'View and download this sticker',
         url: pageUrl,
-        siteName: 'MyStickers',
+        siteName: 'JiraStickers',
         images: [
           {
             url: sticker.file_url,
