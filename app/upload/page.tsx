@@ -13,7 +13,6 @@ export default function UploadPage() {
   const [uploading, setUploading] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
-    description: '',
     file_type: 'image',
   });
   const [file, setFile] = useState<File | null>(null);
@@ -91,7 +90,7 @@ export default function UploadPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           title: formData.title,
-          description: formData.description,
+          description: null,
           file_url: fileUrl,
           file_type: formData.file_type,
           tags: [],
@@ -162,23 +161,6 @@ export default function UploadPage() {
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                     required
-                    className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50"
-                    style={{
-                      backgroundColor: '#1B1B1B',
-                      border: '1px solid rgba(147, 147, 147, 0.35)',
-                      color: '#FFFFFF',
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2" style={{ color: '#939393' }}>
-                    Description
-                  </label>
-                  <textarea
-                    value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    rows={3}
                     className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50"
                     style={{
                       backgroundColor: '#1B1B1B',

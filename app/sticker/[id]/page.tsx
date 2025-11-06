@@ -30,6 +30,9 @@ export default function StickerDetailPage() {
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [newTitle, setNewTitle] = useState('');
+  const [updating, setUpdating] = useState(false);
 
   const isAdmin = address && ADMIN_WALLETS.includes(address.toLowerCase());
 
@@ -77,6 +80,45 @@ export default function StickerDetailPage() {
         console.error('Download failed:', error);
         window.open(sticker.file_url, '_blank');
       }
+    }
+  };
+
+  const handleRename = () => {
+    if (sticker) {
+      setNewTitle(sticker.title);
+      setIsEditing(true);
+    }
+  };
+
+  const handleCancelRename = () => {
+    setIsEditing(false);
+    setNewTitle('');
+  };
+
+  const handleSaveRename = async () => {
+    if (!sticker || !newTitle.trim()) return;
+
+    setUpdating(true);
+    try {
+      const response = await fetch(`/api/stickers/${sticker.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: newTitle.trim() }),
+      });
+
+      if (response.ok) {
+        const updatedSticker = await response.json();
+        setSticker(updatedSticker);
+        setIsEditing(false);
+        setNewTitle('');
+      } else {
+        throw new Error('Failed to update sticker');
+      }
+    } catch (error) {
+      console.error('Error updating sticker:', error);
+      alert('Failed to rename sticker. Please try again.');
+    } finally {
+      setUpdating(false);
     }
   };
 
@@ -177,6 +219,29 @@ export default function StickerDetailPage() {
                 border: '1px solid rgba(147, 147, 147, 0.15)',
               }}
             >
+              {/* Title Section - Show input if editing */}
+              {isEditing && isAdmin ? (
+                <div className="mb-6">
+                  <input
+                    type="text"
+                    value={newTitle}
+                    onChange={(e) => setNewTitle(e.target.value)}
+                    className="w-full px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50 text-[20px] font-semibold"
+                    style={{
+                      backgroundColor: '#1B1B1B',
+                      border: '1px solid #FF8000',
+                      color: '#FFFFFF',
+                    }}
+                    placeholder="Enter new title"
+                    autoFocus
+                  />
+                </div>
+              ) : (
+                <h2 className="text-[24px] font-semibold mb-6 text-center" style={{ color: '#FFFFFF' }}>
+                  {sticker.title}
+                </h2>
+              )}
+
               {/* Image Section */}
               <div className="relative w-full aspect-square bg-transparent rounded-lg mb-6 flex items-center justify-center">
                 <Image
@@ -192,53 +257,106 @@ export default function StickerDetailPage() {
 
               {/* Action Buttons */}
               <div className="space-y-3">
-                <div className="flex gap-3">
-                  <button
-                    onClick={handleCopyLink}
-                    className="flex-1 rounded-[6px] text-[16px] font-semibold leading-[19px] transition-all duration-200 hover:border-opacity-50 flex items-center justify-center"
-                    style={{
-                      height: '48px',
-                      backgroundColor: '#141414',
-                      border: copied ? '1px solid #FF8000' : '1px solid rgba(147, 147, 147, 0.35)',
-                      color: copied ? '#FFFFFF' : 'rgba(147, 147, 147, 0.35)',
-                      backdropFilter: 'blur(10px)',
-                    }}
-                  >
-                    {copied ? 'copied!' : 'copy link'}
-                  </button>
+                {isEditing && isAdmin ? (
+                  <div className="flex gap-3">
+                    <button
+                      onClick={handleCancelRename}
+                      disabled={updating}
+                      className="flex-1 rounded-[6px] text-[16px] font-semibold leading-[19px] transition-all duration-200 flex items-center justify-center"
+                      style={{
+                        height: '48px',
+                        backgroundColor: '#141414',
+                        border: '1px solid rgba(147, 147, 147, 0.35)',
+                        color: 'rgba(147, 147, 147, 0.35)',
+                        backdropFilter: 'blur(10px)',
+                        cursor: updating ? 'not-allowed' : 'pointer',
+                      }}
+                    >
+                      cancel
+                    </button>
 
-                  <button
-                    onClick={handleDownload}
-                    className="flex-1 rounded-[6px] text-[16px] font-semibold leading-[19px] transition-all duration-200 hover:border-opacity-80 flex items-center justify-center"
-                    style={{
-                      height: '48px',
-                      backgroundColor: '#141414',
-                      border: '1px solid #FF8000',
-                      color: '#FFFFFF',
-                      backdropFilter: 'blur(10px)',
-                    }}
-                  >
-                    download
-                  </button>
-                </div>
+                    <button
+                      onClick={handleSaveRename}
+                      disabled={updating || !newTitle.trim()}
+                      className="flex-1 rounded-[6px] text-[16px] font-semibold leading-[19px] transition-all duration-200 flex items-center justify-center"
+                      style={{
+                        height: '48px',
+                        backgroundColor: '#141414',
+                        border: '1px solid #FF8000',
+                        color: updating || !newTitle.trim() ? '#939393' : '#FFFFFF',
+                        backdropFilter: 'blur(10px)',
+                        cursor: updating || !newTitle.trim() ? 'not-allowed' : 'pointer',
+                        opacity: updating || !newTitle.trim() ? 0.5 : 1,
+                      }}
+                    >
+                      {updating ? 'saving...' : 'save'}
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex gap-3">
+                    <button
+                      onClick={handleCopyLink}
+                      className="flex-1 rounded-[6px] text-[16px] font-semibold leading-[19px] transition-all duration-200 hover:border-opacity-50 flex items-center justify-center"
+                      style={{
+                        height: '48px',
+                        backgroundColor: '#141414',
+                        border: copied ? '1px solid #FF8000' : '1px solid rgba(147, 147, 147, 0.35)',
+                        color: copied ? '#FFFFFF' : 'rgba(147, 147, 147, 0.35)',
+                        backdropFilter: 'blur(10px)',
+                      }}
+                    >
+                      {copied ? 'copied!' : 'copy link'}
+                    </button>
 
-                {isAdmin && (
-                  <button
-                    onClick={handleDelete}
-                    disabled={deleting}
-                    className="w-full rounded-[6px] text-[16px] font-semibold leading-[19px] transition-all duration-200 flex items-center justify-center"
-                    style={{
-                      height: '48px',
-                      backgroundColor: '#141414',
-                      border: '1px solid #FF0000',
-                      color: deleting ? '#939393' : '#FF0000',
-                      backdropFilter: 'blur(10px)',
-                      cursor: deleting ? 'not-allowed' : 'pointer',
-                      opacity: deleting ? 0.5 : 1,
-                    }}
-                  >
-                    {deleting ? 'deleting...' : 'delete sticker'}
-                  </button>
+                    <button
+                      onClick={handleDownload}
+                      className="flex-1 rounded-[6px] text-[16px] font-semibold leading-[19px] transition-all duration-200 hover:border-opacity-80 flex items-center justify-center"
+                      style={{
+                        height: '48px',
+                        backgroundColor: '#141414',
+                        border: '1px solid #FF8000',
+                        color: '#FFFFFF',
+                        backdropFilter: 'blur(10px)',
+                      }}
+                    >
+                      download
+                    </button>
+                  </div>
+                )}
+
+                {isAdmin && !isEditing && (
+                  <>
+                    <button
+                      onClick={handleRename}
+                      className="w-full rounded-[6px] text-[16px] font-semibold leading-[19px] transition-all duration-200 flex items-center justify-center"
+                      style={{
+                        height: '48px',
+                        backgroundColor: '#141414',
+                        border: '1px solid #FF8000',
+                        color: '#FFFFFF',
+                        backdropFilter: 'blur(10px)',
+                      }}
+                    >
+                      rename sticker
+                    </button>
+
+                    <button
+                      onClick={handleDelete}
+                      disabled={deleting}
+                      className="w-full rounded-[6px] text-[16px] font-semibold leading-[19px] transition-all duration-200 flex items-center justify-center"
+                      style={{
+                        height: '48px',
+                        backgroundColor: '#141414',
+                        border: '1px solid #FF0000',
+                        color: deleting ? '#939393' : '#FF0000',
+                        backdropFilter: 'blur(10px)',
+                        cursor: deleting ? 'not-allowed' : 'pointer',
+                        opacity: deleting ? 0.5 : 1,
+                      }}
+                    >
+                      {deleting ? 'deleting...' : 'delete sticker'}
+                    </button>
+                  </>
                 )}
               </div>
             </div>

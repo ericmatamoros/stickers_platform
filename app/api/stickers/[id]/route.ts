@@ -21,6 +21,30 @@ export async function GET(
   }
 }
 
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const body = await request.json();
+    const { title } = body;
+
+    if (!title || typeof title !== 'string') {
+      return NextResponse.json({ error: 'Invalid title' }, { status: 400 });
+    }
+
+    const updatedSticker = await prisma.sticker.update({
+      where: { id: params.id },
+      data: { title },
+    });
+
+    return NextResponse.json(updatedSticker);
+  } catch (error) {
+    console.error('Error updating sticker:', error);
+    return NextResponse.json({ error: 'Failed to update sticker' }, { status: 500 });
+  }
+}
+
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
