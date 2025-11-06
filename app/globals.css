@@ -14,6 +14,7 @@ body {
   background: var(--background);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   min-height: 100vh;
+  zoom: 0.85;
 }
 
 /* Custom placeholder styling */

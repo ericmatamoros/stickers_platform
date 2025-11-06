@@ -7,8 +7,8 @@ import { ChainCheckModal } from "@/components/ChainCheckModal";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "MyStickers - Sticker & GIF Gallery",
-  description: "Browse, download, and share stickers and GIFs for Telegram and Discord",
+  title: "JiraStickers - Sticker & GIF Gallery",
+  description: "The ultimate Jirasan Gallery",
 };
 
 export default function RootLayout({
