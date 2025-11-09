@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAccount } from 'wagmi';
 
 interface StickerCardProps {
   sticker: {
@@ -17,7 +18,62 @@ interface StickerCardProps {
 }
 
 export function StickerCard({ sticker }: StickerCardProps) {
+  const { address } = useAccount();
   const [copied, setCopied] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [favoriteLoading, setFavoriteLoading] = useState(false);
+
+  // Check if sticker is favorited when component mounts or address changes
+  useEffect(() => {
+    const checkFavoriteStatus = async () => {
+      if (!address) return;
+
+      try {
+        const response = await fetch(`/api/favorites?wallet=${address}`);
+        const favorites = await response.json();
+        const isFav = favorites.some((fav: any) => fav.id === sticker.id);
+        setIsFavorited(isFav);
+      } catch (error) {
+        console.error('Error checking favorite status:', error);
+      }
+    };
+
+    checkFavoriteStatus();
+  }, [address, sticker.id]);
+
+  const handleToggleFavorite = async () => {
+    if (!address || favoriteLoading) return;
+
+    setFavoriteLoading(true);
+    try {
+      if (isFavorited) {
+        // Remove from favorites
+        const response = await fetch(`/api/favorites?wallet=${address}&stickerId=${sticker.id}`, {
+          method: 'DELETE',
+        });
+        if (response.ok) {
+          setIsFavorited(false);
+        }
+      } else {
+        // Add to favorites
+        const response = await fetch('/api/favorites', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            wallet_address: address,
+            sticker_id: sticker.id,
+          }),
+        });
+        if (response.ok) {
+          setIsFavorited(true);
+        }
+      }
+    } catch (error) {
+      console.error('Error toggling favorite:', error);
+    } finally {
+      setFavoriteLoading(false);
+    }
+  };
 
   const handleCopyLink = async () => {
     await navigator.clipboard.writeText(sticker.file_url);
@@ -56,8 +112,8 @@ export function StickerCard({ sticker }: StickerCardProps) {
     >
       {/* Sticker Image */}
       <Link href={`/sticker/${sticker.id}`}>
-        <div 
-          className="w-full cursor-pointer hover:opacity-90 transition-opacity flex items-center justify-center"
+        <div
+          className="w-full cursor-pointer hover:opacity-90 transition-opacity flex items-center justify-center relative"
           style={{
             height: '283px',
             padding: '39px 32px 0px 32px',
@@ -71,6 +127,30 @@ export function StickerCard({ sticker }: StickerCardProps) {
             className="object-contain max-w-full max-h-[226px]"
             unoptimized={sticker.file_type === 'gif'}
           />
+
+          {/* Favorite Star */}
+          {address && (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleToggleFavorite();
+              }}
+              disabled={favoriteLoading}
+              className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full transition-all hover:scale-110 disabled:opacity-50"
+              style={{
+                backgroundColor: 'rgba(20, 20, 20, 0.8)',
+                backdropFilter: 'blur(10px)',
+              }}
+            >
+              <span
+                className="text-xl"
+                style={{ color: isFavorited ? '#FF8000' : '#939393' }}
+              >
+                {isFavorited ? '★' : '☆'}
+              </span>
+            </button>
+          )}
         </div>
       </Link>
       

@@ -24,7 +24,22 @@ model Sticker {
   created_at       DateTime @default(now())
   updated_at       DateTime @updatedAt
 
+  favorites        Favorite[]
+
   @@index([uploader_wallet])
   @@index([created_at])
+}
+
+model Favorite {
+  id               String   @id @default(cuid())
+  wallet_address   String
+  sticker_id       String
+  created_at       DateTime @default(now())
+
+  sticker          Sticker  @relation(fields: [sticker_id], references: [id], onDelete: Cascade)
+
+  @@unique([wallet_address, sticker_id])
+  @@index([wallet_address])
+  @@index([sticker_id])
 }
 

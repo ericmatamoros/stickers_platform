@@ -49,8 +49,17 @@ export function Navbar() {
             )}
           </div>
 
-          {/* Wallet Connect Button */}
-          <div className="flex items-center">
+          {/* Favorites and Wallet Connect Button */}
+          <div className="flex items-center gap-4">
+            {/* Favorites Link */}
+            <Link
+              href="/favorites"
+              className="text-[22px] font-normal leading-[27px] hidden md:block"
+              style={{ color: '#777777' }}
+            >
+              Favorites
+            </Link>
+
             <ConnectButton.Custom>
               {({ openConnectModal, mounted, account, openAccountModal, chain }) => {
                 if (!mounted) {

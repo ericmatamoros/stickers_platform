@@ -137,12 +137,12 @@ export default function Home() {
               </h3>
               <div className="flex flex-wrap gap-2">
                 <button
-                  onClick={() => toggleFileType('png')}
+                  onClick={() => toggleFileType('image')}
                   className="px-4 py-2 rounded-full text-sm font-medium transition-colors"
                   style={{
-                    backgroundColor: fileType === 'png' ? '#FF8000' : '#141414',
-                    color: fileType === 'png' ? '#FFFFFF' : '#939393',
-                    border: fileType === 'png' ? '1px solid #FF8000' : '1px solid rgba(147, 147, 147, 0.35)',
+                    backgroundColor: fileType === 'image' ? '#FF8000' : '#141414',
+                    color: fileType === 'image' ? '#FFFFFF' : '#939393',
+                    border: fileType === 'image' ? '1px solid #FF8000' : '1px solid rgba(147, 147, 147, 0.35)',
                   }}
                 >
                   PNG
