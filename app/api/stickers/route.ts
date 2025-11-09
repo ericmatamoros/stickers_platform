@@ -5,6 +5,7 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const search = searchParams.get('search');
   const tags = searchParams.get('tags')?.split(',').filter(Boolean);
+  const fileType = searchParams.get('fileType');
 
   try {
     const stickers = await prisma.sticker.findMany({
@@ -23,6 +24,11 @@ export async function GET(request: NextRequest) {
                 tags: {
                   hasSome: tags,
                 },
+              }
+            : {},
+          fileType
+            ? {
+                file_type: fileType,
               }
             : {},
         ],
